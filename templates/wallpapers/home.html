@@ -1,0 +1,260 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if cat %}{{ cat|title }} Wallpapers | Free HD & 4K Backgrounds{% endif %}
+    {% if q %}Search: "{{ q }}" | Gem4K Wallpapers{% endif %}
+    {% if not cat and not q %}Gem4K | HD, 4K & 8K Wallpaper Collection{% endif %}
+{% endblock %}
+
+{% block extra_head %}
+   <script type="application/ld+json">
+   {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "{% if cat %}{{ cat|title }} Wallpapers{% elif q %}Search: {{ q }} Wallpapers{% else %}Gem4K Wallpapers{% endif %}",
+      "description": "{% if cat %}Download free {{ cat }} wallpapers in HD, 4K and 8K resolutions.{% elif q %}Search results for '{{ q }}' - Find perfect wallpapers in our collection.{% else %}Discover thousands of free high-quality wallpapers in HD, 4K, 8K.{% endif %}",
+      "url": "{{ request.build_absolute_uri }}",
+      "isPartOf": {
+         "@type": "WebSite",
+         "name": "Gem4K Wallpapers",
+         "url": "{{ request.scheme }}://{{ request.get_host }}/"
+      },
+      "mainEntity": [
+         {% for wp in page_obj.object_list %}
+            {
+               "@type": "ImageObject",
+               "name": "{{ wp.title|escapejs }}",
+               "contentUrl": "{{ request.scheme }}://{{ request.get_host }}{{ wp.view_link }}",
+               "thumbnailUrl": "{{ request.scheme }}://{{ request.get_host }}{{ wp.view_link }}",
+               "description": "{{ wp.resolution_label }} wallpaper with {{ wp.downloads }} downloads",
+               "width": "{{ wp.width }}",
+               "height": "{{ wp.height }}",
+               "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'wallpapers:detail' wp.slug %}"
+            }{% if not forloop.last %},{% endif %}
+         {% endfor %}
+      ]
+   }
+   </script>
+{% endblock %}
+
+
+{% block meta_description %}{% if cat %}Download free {{ cat }} wallpapers in HD, 4K and 8K resolutions. Curated collection of {{ cat }} backgrounds for desktop and mobile.{% endif %}{% if q %}Search results for "{{ q }}" - Find perfect wallpapers matching your query in our collection.{% endif %}{% if not cat and not q %}Gem4K - Discover and download thousands of free, high-quality wallpapers in HD, QHD, 2K and 4K resolutions. Explore trending backgrounds, updated daily.{% endif %}{% endblock %}
+
+{% block content %}
+<div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- Hero Section -->
+  <section class="relative rounded-2xl overflow-hidden mb-8 mt-2 text-center h-64 md:h-80 flex flex-col justify-center items-center text-white p-3 md:p-6 bg-gray-900">
+    <div class="absolute inset-0 bg-gradient-to-r from-[#0284c7cc] to-[#075985cc]"></div>
+    <div class="relative z-10 px-4 w-full max-w-4xl">
+      <h1 class="text-3xl md:text-6xl font-bold mb-2 md:mb-4 tracking-tight">
+        {% if cat %}{{ cat|title }} Wallpapers{% endif %}
+        {% if q %}Search: "{{ q }}"{% endif %}
+        {% if not cat and not q %}Gem4K - Stunning Free Wallpapers{% endif %}
+      </h1>
+      <p class="text-lg md:text-xl text-blue-100 mb-6 md:mb-8 max-w-3xl mx-auto">
+        {% if cat %}Browse our curated {{ cat }} collection{% endif %}
+        {% if q %}Find wallpapers matching your search{% endif %}
+        {% if not cat and not q %}High-quality backgrounds for all devices{% endif %}
+      </p>
+      
+      <form method="get" class="max-w-2xl mx-auto w-full">
+        <div class="relative shadow-xl">
+          <div class="absolute inset-y-0 left-0 pl-3 md:pl-5 flex items-center pointer-events-none">
+            <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          <input 
+            name="q" 
+            value="{{ q }}" 
+            placeholder="Search nature, abstract, 4K..."
+            class="w-full bg-white px-10 md:px-14 py-2.5 md:py-4 rounded-full text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-lg"
+          >
+          <button type="submit" class="absolute inset-y-0 right-0 px-4 md:px-8 bg-blue-600 text-white font-medium rounded-r-full hover:bg-blue-700 transition-colors duration-200">
+            Search
+          </button>
+        </div>
+      </form>
+    </div>
+    
+    <!-- Popular tags -->
+    {% if popular_tags %}
+      <div class="absolute bottom-6 left-0 right-0 z-10">
+      <div class="flex flex-wrap justify-center gap-2 px-4">
+        <span class="text-blue-100 text-sm mr-2">Popular:</span>
+        {% for tag in popular_tags|slice:":6" %}
+          <a href="?q={{ tag }}" class="px-3 py-1 text-sm rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors">
+            {{ tag }}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </section>
+
+  <!-- Category Filters -->
+  <section class="mb-8">
+    <div class="flex flex-wrap justify-center gap-2 md:gap-3">
+      <a href="{% url 'wallpapers:home' %}" class="px-2.5 md:px-3 py-1 md:py-1.5 text-xs md:text-sm font-medium rounded-full transition-all duration-200
+        {% if not cat %} bg-blue-600 text-white shadow-md hover:shadow-lg {% else %} bg-white text-gray-700 hover:bg-gray-100 shadow-sm {% endif %}">
+        All
+      </a>
+      {% for value, label in categories %}
+        <a href="?cat={{ value }}" class="px-2.5 md:px-3 py-1 md:py-1.5 text-xs md:text-sm font-medium rounded-full transition-all duration-200 capitalize
+          {% if cat == value %} bg-blue-600 text-white shadow-md hover:shadow-lg {% else %} bg-white text-gray-700 hover:bg-gray-100 shadow-sm {% endif %}">
+          {{ label }}
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+  
+  <!-- Device Toggle -->
+  <div class="flex justify-center mb-8">
+    <div class="inline-flex bg-white rounded-full p-1 shadow-sm border border-gray-200">
+      <a href="?device=pc{% if cat %}&cat={{ cat }}{% endif %}{% if q %}&q={{ q }}{% endif %}" 
+         class="px-5 py-1 md:py-2 text-sm font-medium rounded-full transition-colors {% if device == 'pc' %} bg-blue-600 text-white {% else %} text-gray-700 hover:bg-gray-100 {% endif %}">
+        Desktop
+      </a>
+      <a href="?device=mobile{% if cat %}&cat={{ cat }}{% endif %}{% if q %}&q={{ q }}{% endif %}" 
+         class="px-5 py-1 md:py-2 text-sm font-medium rounded-full transition-colors {% if device == 'mobile' %} bg-blue-600 text-white {% else %} text-gray-700 hover:bg-gray-100 {% endif %}">
+        Mobile
+      </a>
+    </div>
+  </div>
+
+  <!-- Wallpapers Grid -->
+  {% if page_obj.object_list %}
+    <section class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-5 space-y-5">
+      {% for wp in page_obj.object_list %}
+        <div class="relative break-inside-avoid group rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+          <span class="absolute top-2 left-2 rounded-xl p-1 z-50 text-xs font-semibold bg-blue-600 text-white">{{wp.get_device_display}}</span>
+          <a href="{% url 'wallpapers:detail' wp.slug %}" class="block">
+            <div class="relative aspect-[16/9] overflow-hidden">
+              <img 
+                src="{{ wp.view_link }}" 
+                alt="Gem4K-{{ wp.title }}" 
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+                width="{{ wp.width }}"
+                height="{{ wp.height }}"
+              >
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              
+              <div class="absolute inset-0 p-5 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div>
+                  {% if wp.is_featured %}
+                    <span class="inline-flex items-center ml-10 transform translate-y-[-13px] px-2.5 py-1 rounded-full text-xs font-bold bg-yellow-400 text-yellow-900 shadow-sm">
+                      <svg class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                      </svg>
+                      Featured
+                    </span>
+                  {% endif %}
+                </div>
+                <div>
+                  <h3 class="font-bold text-white text-lg leading-tight mb-1">{{ wp.title }}</h3>
+                  <div class="flex items-center gap-2 text-sm text-gray-300">
+                    <span>{{ wp.resolution_label }}</span>
+                    <span class="w-1 h-1 bg-gray-400 rounded-full"></span>
+                    <span>{{ wp.downloads }} downloads</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a href="{% url 'wallpapers:download' wp.slug %}" 
+             class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 shadow-md"
+             title="Download wallpaper">
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </a>
+          {% if request.user.is_staff %}
+            <!-- Delete Button -->
+            <label for="delete-modal" class="btn btn-error bg-red-500 absolute bottom-1 right-1 btn-sm text-white p-1 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h16"/>
+                <path d="M10 11v6M14 11v6"/>
+                <path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"/>
+                <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/>
+              </svg>
+            </label>
+
+
+            <!-- DaisyUI Modal -->
+            <input type="checkbox" id="delete-modal" class="modal-toggle" />
+            <div class="modal" role="dialog">
+              <div class="modal-box">
+                <h3 class="font-bold text-lg text-red-600">Confirm Delete</h3>
+                <p class="py-4">Are you sure you want to delete "<strong>{{ wp.title }}</strong>"?</p>
+                <div class="modal-action">
+                  <form method="post" action="{% url 'wallpapers:delete' wp.slug %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-error">Yes, Delete</button>
+                  </form>
+                  <label for="delete-modal" class="btn">Cancel</label>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+        </div>
+      {% endfor %}
+    </section>
+  {% else %}
+    <section class="text-center py-20 bg-white rounded-xl shadow-sm">
+      <svg class="mx-auto h-20 w-20 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <h3 class="mt-6 text-xl font-bold text-gray-900">No wallpapers found</h3>
+      <p class="mt-3 text-gray-600 max-w-md mx-auto">Try adjusting your search or browse our categories</p>
+      <div class="mt-6 flex justify-center gap-3">
+        <a href="{% url 'wallpapers:home' %}" class="inline-flex items-center px-5 py-2.5 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+          Browse All
+        </a>
+        <a href="#" class="inline-flex items-center px-5 py-2.5 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+          Suggest Wallpaper
+        </a>
+      </div>
+    </section>
+  {% endif %}
+
+  <!-- Pagination -->
+  {% if page_obj.paginator.num_pages > 1 %}
+    <section class="mt-12 md:mt-16 flex items-center justify-between border-t border-gray-200 pt-8">
+      <div>
+        {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}&q={{ q }}&cat={{ cat }}&device={{ device }}" 
+             class="inline-flex items-center px-5 py-2.5 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 shadow-sm transition-colors">
+            Previous
+          </a>
+        {% endif %}
+      </div>
+      
+      <div class="hidden md:flex gap-2">
+        {% for num in page_obj.paginator.page_range %}
+          {% if num == page_obj.number %}
+            <span class="px-5 py-2.5 border border-blue-500 text-base font-medium rounded-md text-white bg-blue-600 shadow-sm">
+              {{ num }}
+            </span>
+          {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <a href="?page={{ num }}&q={{ q }}&cat={{ cat }}&device={{ device }}" 
+               class="px-5 py-2.5 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 ml-2 shadow-sm transition-colors">
+              {{ num }}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+      
+      <div>
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}&q={{ q }}&cat={{ cat }}&device={{ device }}" 
+             class="inline-flex items-center px-5 py-2.5 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 shadow-sm transition-colors">
+            Next
+          </a>
+        {% endif %}
+      </div>
+    </section>
+  {% endif %}
+</div>
+{% endblock %}

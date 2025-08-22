@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% block title %}Upload{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="bg-white shadow rounded-lg p-6 sm:p-8">
+    <div class="mb-8">
+      <h1 class="text-2xl font-bold text-gray-900">Upload Wallpaper</h1>
+      <p class="mt-2 text-sm text-gray-600">Upload a high-quality wallpaper. An instant preview will be shown.</p>
+    </div>
+
+    {% if messages %}
+      <div class="mb-6 space-y-2">
+      {% for message in messages %}
+        <div class="p-4 rounded-md {% if message.tags == 'error' %}bg-red-100 text-red-700{% else %}bg-green-100 text-green-700{% endif %}" role="alert">
+          {{ message }}
+        </div>
+      {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" class="space-y-6">
+      {% csrf_token %}
+      
+      <div>
+        <label for="id_title" class="block text-sm font-medium text-gray-700">
+          Title <span class="text-red-500">*</span>
+        </label>
+        <input type="text" name="title" id="id_title" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border">
+      </div>
+
+      <div>
+        <label for="id_category" class="block text-sm font-medium text-gray-700">
+          Category
+        </label>
+        <select name="category" id="id_category" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border">
+          <option value="">Select Category</option>
+          {% for value, label in categories %}
+            <option value={{value}}>{{label}}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div>
+        <label for="id_device" class="block text-sm font-medium text-gray-700">
+          Device
+        </label>
+        <select name="device" id="id_device" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border">
+          {% for value, label in devices %}
+            <option value={{value}}>{{label}}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div>
+        <label for="id_tags" class="block text-sm font-medium text-gray-700">
+          Tags <span class="text-red-500">*</span>
+        </label>
+        <input type="text" name="tags" id="id_tags" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border">
+      </div>
+
+      <div class="flex gap-2 items-center">
+        <input type="checkbox" name="featured" id="id_featured" class="mt-0.5" />
+        <label for="id_featured" class="block text-sm font-medium text-gray-700">
+          is featured
+        </label>
+      </div>
+
+      <div>
+        <label for="id_image" class="block text-sm font-medium text-gray-700">
+          Image File <span class="text-red-500">*</span>
+        </label>
+        <div id="drop-zone" class="mt-1 flex flex-col items-center justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md cursor-pointer hover:border-blue-500 transition-colors duration-300">
+          <div id="upload-placeholder" class="text-center">
+            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+              <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <div class="flex text-sm text-gray-600 mt-2">
+              <span class="relative bg-white rounded-md font-medium text-blue-600 hover:text-blue-500">
+                <span>Upload a file</span>
+              </span>
+              <p class="pl-1">or drag and drop</p>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">PNG, JPG, WEBP up to {{ max_size_mb }}MB</p>
+          </div>
+          <div id="image-preview-container" class="hidden w-full text-center">
+              <img id="image-preview" src="#" alt="Image Preview" class="max-h-48 mx-auto rounded-md mb-2"/>
+              <p id="file-info" class="text-sm text-gray-800"></p>
+              <button type="button" id="remove-image-btn" class="mt-2 text-sm font-medium text-red-600 hover:text-red-500">
+                Remove Image
+              </button>
+          </div>
+          <input type="file" name="image" id="id_image" required class="sr-only">
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          Upload Wallpaper
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const fileInput = document.getElementById('id_image'); 
+    const dropZone = document.getElementById('drop-zone');
+    const placeholder = document.getElementById('upload-placeholder');
+    const previewContainer = document.getElementById('image-preview-container');
+    const imagePreview = document.getElementById('image-preview');
+    const fileInfo = document.getElementById('file-info');
+    const removeBtn = document.getElementById('remove-image-btn');
+
+    dropZone.addEventListener('click', (e) => {
+        if (e.target.id !== 'remove-image-btn') {
+            fileInput.click();
+        }
+    });
+
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+            handleFile(fileInput.files[0]);
+        }
+    });
+
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.add('border-blue-500', 'bg-blue-50');
+    });
+
+    dropZone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+        const droppedFiles = e.dataTransfer.files;
+        if (droppedFiles.length > 0) {
+            fileInput.files = droppedFiles; 
+            handleFile(droppedFiles[0]);
+        }
+    });
+
+    removeBtn.addEventListener('click', () => {
+        fileInput.value = '';
+        placeholder.classList.remove('hidden');
+        previewContainer.classList.add('hidden');
+    });
+
+    function handleFile(file) {
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview.src = e.target.result;
+                fileInfo.textContent = `${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+                placeholder.classList.add('hidden');
+                previewContainer.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        } else {
+            alert('Please select a valid image file.');
+            fileInput.value = '';
+        }
+    }
+});
+</script>
+{% endblock %}

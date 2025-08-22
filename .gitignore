@@ -1,0 +1,33 @@
+# Keep your actual source static files
+# Ignore only the collected output
+/staticfiles/
+__pycache__/
+/.env
+db.sqlite3
+*.log
+desktop.ini
+
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+.env/
+
+
+media
+
+# Ignore Django migration files
+*/migrations/*.py
+!*/migrations/__init__.py
+
+
+package-lock.json
+package.json
+
+node_modules
+
+input.css
+
+backup.json
+importToDB.py
