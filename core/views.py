@@ -7,6 +7,6 @@ def robots_txt(request):
     Disallow: /upload/
     Allow: /
 
-    Sitemap: https://flicker-web.onrender.com/sitemap.xml
+    Sitemap: https://gem4k.onrender.com/sitemap.xml
     """
     return HttpResponse(content, content_type="text/plain")
