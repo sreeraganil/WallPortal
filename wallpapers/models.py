@@ -103,6 +103,9 @@ class Wallpaper(models.Model):
         choices=DEVICE_CHOICES,
         help_text="Device for this wallpaper"
     )
+    last_updated = models.DateTimeField(
+        auto_now=True
+    )
     
 
     class Meta:
