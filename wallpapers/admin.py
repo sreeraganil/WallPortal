@@ -3,7 +3,7 @@ from .models import Wallpaper
 
 @admin.register(Wallpaper)
 class WallpaperAdmin(admin.ModelAdmin):
-    list_display = ("title","category","resolution_label","downloads", "last_updated", "created_at")
+    list_display = ("title", "category", "resolution_label", "downloads", "updated_at", "created_at")
     search_fields = ("title","category","resolution_label")
-    list_filter = ("category","resolution_label","created_at", "last_updated")
+    list_filter = ("category","resolution_label","created_at", "updated_at")
     prepopulated_fields = {"slug": ("title",)}
