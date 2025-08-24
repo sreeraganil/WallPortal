@@ -162,7 +162,7 @@ class Wallpaper(models.Model):
     def increment_downloads(self):
         """Increment download counter"""
         self.downloads += 1
-        self.save(update_fields=['downloads'])
+        self.save()
 
     @property
     def aspect_ratio(self):
