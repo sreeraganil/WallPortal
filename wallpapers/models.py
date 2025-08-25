@@ -12,6 +12,7 @@ class Wallpaper(models.Model):
         ('movies', 'Movies'),
         ('nature', 'Nature'),
         ('space', 'Space'),
+        ('sports', 'Sports'),
         ('superheros', 'Super Heroes'),
         ('technology', 'Technology'),
         ('other', 'Other'),

@@ -20,12 +20,14 @@ def home(request):
     cat = request.GET.get("cat", "").strip()
     res = request.GET.get("res", "").strip()
     device = request.GET.get("device", "").strip()
-    
-    qs = Wallpaper.objects.all().order_by('-created_at')
-    
+    sort = request.GET.get("sort", "date").strip()  # new
+
+    qs = Wallpaper.objects.all()
+
+    # Filtering
     if q:
         qs = qs.filter(
-            Q(title__icontains=q) | 
+            Q(title__icontains=q) |
             Q(category__icontains=q) |
             Q(tags__icontains=q)
         )
@@ -33,27 +35,37 @@ def home(request):
         qs = qs.filter(category__iexact=cat)
     if res:
         if res.lower() == '4k':
-            qs = qs.filter(width__gte=3840) | qs.filter(height__gte=2160)
+            qs = qs.filter(Q(width__gte=3840) | Q(height__gte=2160))
         elif res.lower() == '8k':
-            qs = qs.filter(width__gte=7680) | qs.filter(height__gte=4320)
+            qs = qs.filter(Q(width__gte=7680) | Q(height__gte=4320))
         else:
             qs = qs.filter(resolution_label__iexact=res)
     if device:
-        qs = qs.filter(device = device)
-    
+        qs = qs.filter(device=device)
+
+    # Sorting
+    if sort == "downloads":
+        qs = qs.order_by("-downloads")
+    elif sort == "featured":
+        qs = qs.filter(is_featured=True).order_by("-created_at")
+    else:  # default = date
+        qs = qs.order_by("-created_at")
+
+    # Pagination
     paginator = Paginator(qs, 24)
     page = request.GET.get("page", 1)
     page_obj = paginator.get_page(page)
-    
+
     return render(
-        request, 
-        "wallpapers/home.html", 
+        request,
+        "wallpapers/home.html",
         {
-            "page_obj": page_obj, 
-            "q": q, 
-            "cat": cat, 
+            "page_obj": page_obj,
+            "q": q,
+            "cat": cat,
             "res": res,
             "device": device,
+            "sort": sort,  # send to template
             "categories": Wallpaper.CATEGORY_CHOICES
         }
     )
@@ -167,7 +179,7 @@ def upload(request):
             messages.error(request, f"An error occurred during upload: {str(e)}")
 
     context = {
-        "max_size_mb": 20, 
+        "max_size_mb": 10, 
         'categories': Wallpaper.CATEGORY_CHOICES,
         'devices': Wallpaper.DEVICE_CHOICES
     }
