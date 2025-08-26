@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ wp.title }} | Free {{ wp.resolution_label }} Wallpaper Download | Gem4K{% endblock %}
-{% block og_title %}{{ wp.title }} | Free {{ wp.resolution_label }} Wallpaper Download | Gem4K{% endblock %}
+{% block title %}{{ wp.title }} | Free {{ wp.resolution_label }} Wallpaper Download | WallPortal{% endblock %}
+{% block og_title %}{{ wp.title }} | Free {{ wp.resolution_label }} Wallpaper Download | WallPortal{% endblock %}
 
 {% block meta_description %}Download '{{ wp.title }}' - a stunning {{ wp.resolution_label }} wallpaper{% if wp.category %} in the {{ wp.get_category_display }} category{% endif %}. Free high-quality background for desktop and mobile.{% endblock %}
 
-{% block meta_keywords %}{{ wp.title }}, {{ wp.resolution_label }} wallpaper, free download, {% if wp.category %}{{ wp.get_category_display }}, {% endif %}{{ wp.mime_type|slice:"6:"|upper }}, {% if wp.tags %} {{ wp.tags }} {% endif %} Gem4K, Gem4K free wallpapers, Gem4K wallpapers,{% endblock %}
+{% block meta_keywords %}{{ wp.title }}, {{ wp.resolution_label }} wallpaper, free download, {% if wp.category %}{{ wp.get_category_display }}, {% endif %}{{ wp.mime_type|slice:"6:"|upper }}, {% if wp.tags %} {{ wp.tags }} {% endif %} WallPortal, WallPortal free wallpapers, WallPortal wallpapers,{% endblock %}
 
 {% block og_image %}{{ wp.view_link }}{% endblock %}
 

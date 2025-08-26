@@ -2,8 +2,8 @@
 
 {% block title %}
     {% if cat %}{{ cat|title }} Wallpapers | Free HD & 4K Backgrounds{% endif %}
-    {% if q %}Search: "{{ q }}" | Gem4K Wallpapers{% endif %}
-    {% if not cat and not q %}Gem4K | HD, 4K & 8K Wallpaper Collection{% endif %}
+    {% if q %}Search: "{{ q }}" | WallPortal Wallpapers{% endif %}
+    {% if not cat and not q %}WallPortal | HD, 4K & 8K Wallpaper Collection{% endif %}
 {% endblock %}
 
 {% block extra_head %}
@@ -11,12 +11,12 @@
    {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      "name": "{% if cat %}{{ cat|title }} Wallpapers{% elif q %}Search: {{ q }} Wallpapers{% else %}Gem4K Wallpapers{% endif %}",
+      "name": "{% if cat %}{{ cat|title }} Wallpapers{% elif q %}Search: {{ q }} Wallpapers{% else %}WallPortal Wallpapers{% endif %}",
       "description": "{% if cat %}Download free {{ cat }} wallpapers in HD, 4K and 8K resolutions.{% elif q %}Search results for '{{ q }}' - Find perfect wallpapers in our collection.{% else %}Discover thousands of free high-quality wallpapers in HD, 4K, 8K.{% endif %}",
       "url": "{{ request.build_absolute_uri }}",
       "isPartOf": {
          "@type": "WebSite",
-         "name": "Gem4K Wallpapers",
+         "name": "WallPortal Wallpapers",
          "url": "{{ request.scheme }}://{{ request.get_host }}/"
       },
       "mainEntity": [
@@ -38,7 +38,7 @@
 {% endblock %}
 
 
-{% block meta_description %}{% if cat %}Download free {{ cat }} wallpapers in HD, 4K and 8K resolutions. Curated collection of {{ cat }} backgrounds for desktop and mobile.{% endif %}{% if q %}Search results for "{{ q }}" - Find perfect wallpapers matching your query in our collection.{% endif %}{% if not cat and not q %}Gem4K - Discover and download thousands of free, high-quality wallpapers in HD, QHD, 2K and 4K resolutions. Explore trending backgrounds, updated daily.{% endif %}{% endblock %}
+{% block meta_description %}{% if cat %}Download free {{ cat }} wallpapers in HD, 4K and 8K resolutions. Curated collection of {{ cat }} backgrounds for desktop and mobile.{% endif %}{% if q %}Search results for "{{ q }}" - Find perfect wallpapers matching your query in our collection.{% endif %}{% if not cat and not q %}WallPortal - Discover and download thousands of free, high-quality wallpapers in HD, QHD, 2K and 4K resolutions. Explore trending backgrounds, updated daily.{% endif %}{% endblock %}
 
 {% block content %}
 <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,7 +51,7 @@
     <h1 class="text-2xl md:text-5xl font-bold mb-2 tracking-tight">
       {% if cat %}{{ cat|title }} Wallpapers{% endif %}
       {% if q %}Search: "{{ q }}"{% endif %}
-      {% if not cat and not q %}Gem4K - Free Wallpapers{% endif %}
+      {% if not cat and not q %}WallPortal - Free Wallpapers{% endif %}
     </h1>
     <p class="text-sm md:text-base text-blue-100 mb-4">
       {% if cat %}Curated {{ cat }} backgrounds{% endif %}
@@ -176,7 +176,7 @@
             <div class="relative aspect-[16/9] overflow-hidden">
               <img 
                 src="{{ wp.view_link }}" 
-                alt="Gem4K-{{ wp.title }}" 
+                alt="WallPortal-{{ wp.title }}" 
                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 loading="lazy"
                 width="{{ wp.width }}"

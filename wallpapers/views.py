@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.utils.text import slugify
 from .models import Wallpaper
 import cloudinary.uploader
@@ -23,6 +23,9 @@ def home(request):
     sort = request.GET.get("sort", "date").strip()  # new
 
     qs = Wallpaper.objects.all()
+
+    count = qs.count()
+    size = qs.aggregate(total_size=Sum('size_bytes'))['total_size'] 
 
     # Filtering
     if q:
@@ -66,7 +69,9 @@ def home(request):
             "res": res,
             "device": device,
             "sort": sort,  # send to template
-            "categories": Wallpaper.CATEGORY_CHOICES
+            "categories": Wallpaper.CATEGORY_CHOICES,
+            "count": count,
+            "size": size
         }
     )
 

@@ -5,30 +5,30 @@
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width,initial-scale=1">
    
-   <title>{% block title %}Gem4K - High Quality Wallpapers{% endblock title %}</title>
+   <title>{% block title %}WallPortal - High Quality Wallpapers{% endblock title %}</title>
    
-  <meta name="description" content="{% block meta_description %}Discover and download thousands of stunning, high-quality wallpapers for your desktop and mobile devices. Free, curated, and easy to browse. | Gem4K{% endblock meta_description %}">
+  <meta name="description" content="{% block meta_description %}Discover and download thousands of stunning, high-quality wallpapers for your desktop and mobile devices. Free, curated, and easy to browse. | WallPortal{% endblock meta_description %}">
 
    
-  <meta name="keywords" content="{% block meta_keywords %}Gem4K, Gem4K free wallpapers, Gem 4K, Gem4K wallpapers, wallpapers, free wallpapers, desktop background, mobile wallpaper, 8K wallpapers, nature, abstract, tech,4K wallpapers, HD wallpapers, anime wallpapers, gaming wallpapers, superhero wallpapers, car wallpapers, aesthetic wallpapers, minimal wallpapers, cool wallpapers, abstract art wallpapers, fantasy wallpapers, sci-fi wallpapers, cityscape wallpapers, space wallpapers, galaxy wallpapers, ocean wallpapers, mountain wallpapers, forest wallpapers, sunset wallpapers, night sky wallpapers, animal wallpapers, cute wallpapers, motivational wallpapers, inspirational wallpapers, sports wallpapers, football wallpapers, cricket wallpapers, basketball wallpapers, music wallpapers, movie wallpapers, Netflix wallpapers, trending wallpapers, modern wallpapers, neon wallpapers, cyberpunk wallpapers, vintage wallpapers, retro wallpapers, artistic wallpapers, photography wallpapers, abstract background, mobile backgrounds, desktop wallpapers, widescreen wallpapers, dual monitor wallpapers, AMOLED wallpapers, iPhone wallpapers, Android wallpapers{% endblock meta_keywords %}">
+  <meta name="keywords" content="{% block meta_keywords %}WallPortal, WallPortal free wallpapers, Wall Portal, WallPortal wallpapers, wallpapers, free wallpapers, desktop background, mobile wallpaper, 8K wallpapers, nature, abstract, tech,4K wallpapers, HD wallpapers, anime wallpapers, gaming wallpapers, superhero wallpapers, car wallpapers, aesthetic wallpapers, minimal wallpapers, cool wallpapers, abstract art wallpapers, fantasy wallpapers, sci-fi wallpapers, cityscape wallpapers, space wallpapers, galaxy wallpapers, ocean wallpapers, mountain wallpapers, forest wallpapers, sunset wallpapers, night sky wallpapers, animal wallpapers, cute wallpapers, motivational wallpapers, inspirational wallpapers, sports wallpapers, football wallpapers, cricket wallpapers, basketball wallpapers, music wallpapers, movie wallpapers, Netflix wallpapers, trending wallpapers, modern wallpapers, neon wallpapers, cyberpunk wallpapers, vintage wallpapers, retro wallpapers, artistic wallpapers, photography wallpapers, abstract background, mobile backgrounds, desktop wallpapers, widescreen wallpapers, dual monitor wallpapers, AMOLED wallpapers, iPhone wallpapers, Android wallpapers{% endblock meta_keywords %}">
 
    
-   <meta name="author" content="Gem4K">
+   <meta name="author" content="WallPortal">
    
    <meta name="robots" content="index, follow">
    
    <meta name="theme-color" content="#0284c7">
    <link rel="canonical" href="{% block canonical_url %}{{ request.build_absolute_uri }}{% endblock canonical_url %}">
    
-   <meta property="og:title" content="{% block og_title %}{% block title_og_override %}{% endblock title_og_override %}{% if not title_og_override %}{% block title_for_og %}Gem4K - High Quality Wallpapers{% endblock title_for_og %}{% endif %}{% endblock og_title %}">
+   <meta property="og:title" content="{% block og_title %}{% block title_og_override %}{% endblock title_og_override %}{% if not title_og_override %}{% block title_for_og %}WallPortal - High Quality Wallpapers{% endblock title_for_og %}{% endif %}{% endblock og_title %}">
    <meta property="og:description" content="{% block og_description %}{% block meta_description_og_override %}{% endblock meta_description_og_override %}{% if not meta_description_og_override %}{% block meta_description_for_og %}Discover and download thousands of stunning, high-quality wallpapers for your desktop and mobile devices.{% endblock meta_description_for_og %}{% endif %}{% endblock og_description %}">
    <meta property="og:image" content="{% block og_image %}{% static 'images/favicon.png' %}{% endblock og_image %}">
    <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock og_url %}">
-   <meta property="og:site_name" content="Gem4K">
+   <meta property="og:site_name" content="WallPortal">
    <meta property="og:type" content="website">
    
    <meta name="twitter:card" content="summary_large_image">
-   <meta name="twitter:title" content="{% block twitter_title %}{% block og_title_twitter_override %}{% endblock og_title_twitter_override %}{% if not og_title_twitter_override %}{% block og_title_for_twitter %}Gem4K - High Quality Wallpapers{% endblock og_title_for_twitter %}{% endif %}{% endblock twitter_title %}">
+   <meta name="twitter:title" content="{% block twitter_title %}{% block og_title_twitter_override %}{% endblock og_title_twitter_override %}{% if not og_title_twitter_override %}{% block og_title_for_twitter %}WallPortal - High Quality Wallpapers{% endblock og_title_for_twitter %}{% endif %}{% endblock twitter_title %}">
    <meta name="twitter:description" content="{% block twitter_description %}{% block og_description_twitter_override %}{% endblock og_description_twitter_override %}{% if not og_description_twitter_override %}{% block meta_description_for_twitter %}Discover and download thousands of stunning, high-quality wallpapers for your desktop and mobile devices.{% endblock meta_description_for_twitter %}{% endif %}{% endblock twitter_description %}">
    <meta name="twitter:image" content="{% block twitter_image %}{% block og_image_twitter_override %}{% endblock og_image_twitter_override %}{% if not og_image_twitter_override %}{% static 'images/favicon.png' %}{% endif %}{% endblock twitter_image %}">
    
@@ -63,10 +63,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
          "@type": "WebSite",
          "@id": "{{ request.scheme }}://{{ request.get_host }}/#website",
          "url": "{{ request.scheme }}://{{ request.get_host }}/",
-         "name": "Gem4K",
+         "name": "WallPortal",
          "publisher": {
             "@type": "Organization",
-            "name": "Gem4K",
+            "name": "WallPortal",
             "logo": {
                "@type": "ImageObject",
                "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}"
@@ -77,7 +77,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
          "@type": "WebPage",
          "@id": "{{ request.build_absolute_uri }}#webpage",
          "url": "{{ request.build_absolute_uri }}",
-         "name": "{% block schema_title %}Gem4K - High Quality Wallpapers{% endblock schema_title %}",
+         "name": "{% block schema_title %}WallPortal - High Quality Wallpapers{% endblock schema_title %}",
          "isPartOf": { "@id": "{{ request.scheme }}://{{ request.get_host }}/#website" },
          "primaryImageOfPage": {
             "@type": "ImageObject",
@@ -111,7 +111,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
          <a href="/" class="flex items-center gap-2 text-2xl font-bold text-gray-900 dark:text-white hover:text-blue-800 transition-colors">
             <img src="{% static 'images/favicon.png' %}" class="h-8 w-8" alt="logo" />
             <span class="inline">
-               Gem<span class="text-blue-400 dark:text-blue-400">4K</span>
+               Wall<span class="text-blue-400 dark:text-blue-400">Portal</span>
             </span>
          </a>
 
@@ -127,7 +127,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       </div>
       {% if request.user.is_authenticated %}
          <div class="flex items-center space-x-4">
-            <span class="text-gray-600 dark:text-white hidden sm:inline">Welcome, {{ request.user.username }}</span>
+            <span class="hidden sm:inline text-sm font-semibold text-gray-700 dark:text-gray-200 tracking-wide">
+               WP: <span class="text-blue-500">{{ count }}</span> • Size: <span class="text-green-500">{{ size|filesizeformat }}</span>
+            </span>
+
             <a href="{% url 'wallpapers:logout' %}" class="text-gray-600 dark:text-white hover:text-blue-600 transition-colors flex items-center gap-1">
                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -151,7 +154,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
          <a href="{% url 'terms_of_service' %}" class="hover:text-blue-600">Terms of Service</a>
          <a href="{% url 'contact'   %}" class="hover:text-blue-600">Contact</a>
       </div>
-      &copy; {% now "Y" %} Gem4K. All rights reserved.     
+      &copy; {% now "Y" %} WallPortal. All rights reserved.     
    </div>
 </footer>
 </body>
