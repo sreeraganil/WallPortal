@@ -215,7 +215,7 @@
           </a>
           {% if request.user.is_staff %}
             <!-- Delete Button -->
-            <label for="delete-modal" class="btn btn-error bg-red-500 absolute bottom-1 right-1 btn-sm text-white p-1 rounded-full">
+            <label for="delete-modal-{{ wp.slug }}" class="btn btn-error bg-red-500 absolute bottom-1 right-1 btn-sm text-white p-1 rounded-full">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M4 7h16"/>
                 <path d="M10 11v6M14 11v6"/>
@@ -226,7 +226,7 @@
 
 
             <!-- DaisyUI Modal -->
-            <input type="checkbox" id="delete-modal" class="modal-toggle" />
+            <input type="checkbox" id="delete-modal-{{ wp.slug }}" class="modal-toggle" />
             <div class="modal" role="dialog">
               <div class="modal-box">
                 <h3 class="font-bold text-lg text-red-600">Confirm Delete</h3>
