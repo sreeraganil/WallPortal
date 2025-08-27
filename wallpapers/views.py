@@ -131,8 +131,7 @@ def upload(request):
             uploaded = cloudinary.uploader.upload(
                 image_file,
                 folder="wallpapers",
-                resource_type="image",
-                quality="auto:best"
+                resource_type="image"
             )
 
             width = uploaded.get("width")
