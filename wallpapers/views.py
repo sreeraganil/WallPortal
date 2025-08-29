@@ -149,10 +149,15 @@ def upload(request):
 
             public_id = uploaded["public_id"]  
 
+            preview_size = {"width": 600, "height": 600, "crop": "limit"}
+
+            if device == "mobile":
+                preview_size = {"width": 1000, "height": 1000, "crop": "limit"}
+
             preview_url, _ = cloudinary_url(
                 public_id,
                 transformation=[
-                    {"width": 600, "height": 600, "crop": "limit"},
+                    preview_size,
                     {"quality": "auto:low", "fetch_format": "auto"}
                 ]
             )
