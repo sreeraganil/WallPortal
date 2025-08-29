@@ -93,7 +93,7 @@ class Wallpaper(models.Model):
         default=False,
         help_text="Mark as featured wallpaper"
     )
-    tags = models.CharField(
+    tags = models.TextField(
         max_length=255,
         blank=True,
         help_text="Comma-separated tags for better discoverability"
