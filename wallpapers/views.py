@@ -260,6 +260,8 @@ def contact_view(request):
 
 
 
+from xml.sax.saxutils import escape # Import the escape function
+
 def sitemap(request):
     base_url = request.build_absolute_uri('/')[:-1]
     urls = []
@@ -280,21 +282,11 @@ def sitemap(request):
         "images": []
     })
 
-    # Wallpaper detail pages with images
-    for wp in Wallpaper.objects.all():
-        image_url = wp.image.url if hasattr(wp, "image") else None
-
-        # Convert tags into SEO keywords
-        tags = []
-        if hasattr(wp, "tags"):
-            if isinstance(wp.tags, str):
-                tags = [t.strip() for t in wp.tags.split(",") if t.strip()]
-            elif hasattr(wp.tags, "all"):  # if ManyToMany
-                tags = [t.name for t in wp.tags.all()]
-
+    # Wallpaper detail pages
+    for wp in Wallpaper.objects.all().iterator():
+        image_url = wp.view_link or wp.download_link
+        tags = [t.name for t in wp.tags.all()] if hasattr(wp.tags, "all") else []
         seo_keywords = ", ".join(tags[:5]) if tags else "HD, 4K, wallpaper"
-
-        # Build SEO title & caption
         seo_title = f"{wp.title} | {seo_keywords}"
         seo_caption = f"Download {wp.title} in {seo_keywords} resolution from WallPortal."
 
@@ -302,14 +294,14 @@ def sitemap(request):
             "loc": base_url + reverse("wallpapers:detail", args=[wp.slug]),
             "priority": "0.9",
             "changefreq": "weekly",
-            "lastmod": wp.updated_at.strftime("%Y-%m-%d") if hasattr(wp, "updated_at") else None,
+            "lastmod": wp.updated_at.strftime("%Y-%m-%d") if hasattr(wp, "updated_at") and wp.updated_at else None,
             "images": [{
                 "loc": image_url,
                 "title": seo_title,
                 "caption": seo_caption
             }] if image_url else []
         })
-
+    
     # Generate XML with image namespace
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
     xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n'
@@ -317,7 +309,7 @@ def sitemap(request):
 
     for u in urls:
         xml += "  <url>\n"
-        xml += f"    <loc>{u['loc']}</loc>\n"
+        xml += f"    <loc>{escape(u['loc'])}</loc>\n"
         if u.get("lastmod"):
             xml += f"    <lastmod>{u['lastmod']}</lastmod>\n"
         xml += f"    <changefreq>{u['changefreq']}</changefreq>\n"
@@ -327,15 +319,15 @@ def sitemap(request):
         for img in u.get("images", []):
             if img.get("loc"):
                 xml += "    <image:image>\n"
-                xml += f"      <image:loc>{img['loc']}</image:loc>\n"
+                xml += f"      <image:loc>{escape(img['loc'])}</image:loc>\n"
                 if img.get("title"):
-                    xml += f"      <image:title>{img['title']}</image:title>\n"
+                    xml += f"      <image:title>{escape(img['title'])}</image:title>\n"
                 if img.get("caption"):
-                    xml += f"      <image:caption>{img['caption']}</image:caption>\n"
+                    xml += f"      <image:caption>{escape(img['caption'])}</image:caption>\n"
                 xml += "    </image:image>\n"
 
         xml += "  </url>\n"
 
     xml += "</urlset>"
 
-    return HttpResponse(xml, content_type="application/xml; charset=utf-8"))
+    return HttpResponse(xml, content_type="application/xml; charset=utf-8")
