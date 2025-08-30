@@ -160,7 +160,8 @@ def upload(request):
                 transformation=[
                     preview_size,
                     {"quality": "auto:low", "fetch_format": "auto"}
-                ]
+                ],
+                secure=True
             )
 
             # Original download URL (full quality, original format)
