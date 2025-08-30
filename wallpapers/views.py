@@ -11,6 +11,7 @@ from cloudinary.utils import cloudinary_url
 import requests
 from django.contrib import messages
 from django.contrib.auth import logout
+from xml.sax.saxutils import escape # Import the escape function
 
 
 from django.urls import reverse
@@ -259,8 +260,6 @@ def contact_view(request):
 
 
 
-
-from xml.sax.saxutils import escape # Import the escape function
 
 def sitemap(request):
     base_url = request.build_absolute_uri('/')[:-1]
