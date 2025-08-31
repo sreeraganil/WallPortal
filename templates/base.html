@@ -22,7 +22,7 @@
    
    <meta property="og:title" content="{% block og_title %}{% block title_og_override %}{% endblock title_og_override %}{% if not title_og_override %}{% block title_for_og %}WallPortal - High Quality Wallpapers{% endblock title_for_og %}{% endif %}{% endblock og_title %}">
    <meta property="og:description" content="{% block og_description %}{% block meta_description_og_override %}{% endblock meta_description_og_override %}{% if not meta_description_og_override %}{% block meta_description_for_og %}Discover and download thousands of stunning, high-quality wallpapers for your desktop and mobile devices.{% endblock meta_description_for_og %}{% endif %}{% endblock og_description %}">
-   <meta property="og:image" content="{% block og_image %}{% static 'images/favicon.png' %}{% endblock og_image %}">
+   <meta property="og:image" content="{% block og_image %}{{ request.build_absolute_uri }}static/images/favicon.png{% endblock og_image %}">
    <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock og_url %}">
    <meta property="og:site_name" content="WallPortal">
    <meta property="og:type" content="website">
@@ -30,7 +30,7 @@
    <meta name="twitter:card" content="summary_large_image">
    <meta name="twitter:title" content="{% block twitter_title %}{% block og_title_twitter_override %}{% endblock og_title_twitter_override %}{% if not og_title_twitter_override %}{% block og_title_for_twitter %}WallPortal - High Quality Wallpapers{% endblock og_title_for_twitter %}{% endif %}{% endblock twitter_title %}">
    <meta name="twitter:description" content="{% block twitter_description %}{% block og_description_twitter_override %}{% endblock og_description_twitter_override %}{% if not og_description_twitter_override %}{% block meta_description_for_twitter %}Discover and download thousands of stunning, high-quality wallpapers for your desktop and mobile devices.{% endblock meta_description_for_twitter %}{% endif %}{% endblock twitter_description %}">
-   <meta name="twitter:image" content="{% block twitter_image %}{% block og_image_twitter_override %}{% endblock og_image_twitter_override %}{% if not og_image_twitter_override %}{% static 'images/favicon.png' %}{% endif %}{% endblock twitter_image %}">
+   <meta name="twitter:image" content="{% block twitter_image %}{% block og_image_twitter_override %}{% endblock og_image_twitter_override %}{% if not og_image_twitter_override %}{{ request.build_absolute_uri }}static/images/favicon.png{% endif %}{% endblock twitter_image %}">
 
    <meta name="google-adsense-account" content="ca-pub-7133037911836409">
    
