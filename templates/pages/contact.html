@@ -13,17 +13,17 @@
       <div>
         <h3 class="text-lg font-semibold text-gray-800">Email Us</h3>
         <p class="text-gray-600">For general inquiries, support, or feedback.</p>
-        <a href="mailto:contact@WallPortal.example.com" class="text-primary-600 hover:text-primary-700 font-medium">contact@WallPortal.example.com</a>
+        <a href="mailto:sreerag.user@gmail.com" class="text-primary-600 hover:text-primary-700 font-medium">sreerag.user@gmail.com</a>
       </div>
       <div>
         <h3 class="text-lg font-semibold text-gray-800">Our Location</h3>
-        <p class="text-gray-600">123 Wallpaper Lane<br>Thiruvananthapuram, Kerala, India</p>
+        <p class="text-gray-600">Thiruvananthapuram, Kerala, India</p>
       </div>
     </div>
     
     <div>
       <h3 class="text-lg font-semibold text-gray-800 mb-4">Send a Message</h3>
-      <form action="#" method="POST" class="space-y-4">
+      <form action="https://formspree.io/f/xvgbqbaj" method="POST" class="space-y-4">
         <div>
           <label for="name" class="sr-only">Name</label>
           <input type="text" name="name" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500" placeholder="Your Name" required>
@@ -37,7 +37,7 @@
           <textarea name="message" id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500" placeholder="Your Message" required></textarea>
         </div>
         <div>
-          <button type="submit" class="w-full px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors">
+          <button type="submit" class="w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors">
             Send Message
           </button>
         </div>
@@ -45,4 +45,14 @@
     </div>
   </div>
 </div>
+
+<script>
+  window.onload = function() {
+    if (window.performance && window.performance.navigation.type === 2) {
+      // User came back with "Back" button
+      document.querySelector("form").reset();
+    }
+  }
+</script>
+
 {% endblock %}

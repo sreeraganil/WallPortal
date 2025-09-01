@@ -2,6 +2,7 @@ from PIL import Image
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.views.decorators.cache import never_cache
 from django.core.paginator import Paginator
 from django.db.models import Q, Sum
 from django.utils.text import slugify
@@ -259,6 +260,7 @@ def privacy_policy_view(request):
 def terms_of_service_view(request):
     return render(request, 'pages/terms_of_service.html')
 
+@never_cache
 def contact_view(request):
     return render(request, 'pages/contact.html')
 
