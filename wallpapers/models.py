@@ -82,11 +82,11 @@ class Wallpaper(models.Model):
         help_text="Number of downloads"
     )
     created_at = models.DateTimeField(
-        auto_now_add=True,
+        # auto_now_add=True,
         help_text="Date and time when uploaded"
     )
     updated_at = models.DateTimeField(
-        auto_now=True,
+        # auto_now=True,
         help_text="Date and time when last updated"
     )
     is_featured = models.BooleanField(

@@ -24,9 +24,12 @@ def home(request):
     sort = request.GET.get("sort", "date").strip()  # new
 
     qs = Wallpaper.objects.all()
+    count = 0
+    size = 0
 
-    count = qs.count()
-    size = qs.aggregate(total_size=Sum('size_bytes'))['total_size'] 
+    if request.user.is_staff:
+        count = qs.count()
+        size = qs.aggregate(total_size=Sum('size_bytes'))['total_size'] 
 
     # Filtering
     if q:

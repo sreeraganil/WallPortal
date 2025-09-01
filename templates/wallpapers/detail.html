@@ -4,6 +4,8 @@
 {% block title %}{{ wp.title }} | Free {{ wp.resolution_label }} Wallpaper Download | WallPortal{% endblock %}
 {% block og_title %}{{ wp.title }} | Free {{ wp.resolution_label }} Wallpaper Download | WallPortal{% endblock %}
 
+{% block canonical_url %}{{ request.build_absolute_uri }}{% endblock canonical_url %}
+
 {% block meta_description %}WallPortal - Download '{{ wp.title }}' - a stunning {{ wp.resolution_label }} wallpaper{% if wp.category %} in the {{ wp.get_category_display }} category{% endif %}. Free high-quality background for desktop and mobile.{% endblock %}
 
 {% block meta_keywords %}{{ wp.title }}, WallPortal, {{ wp.resolution_label }} wallpaper, free download, {% if wp.category %}{{ wp.get_category_display }}, {% endif %}{{ wp.mime_type|slice:"6:"|upper }}, {% if wp.tags %} {{ wp.tags }} {% endif %} WallPortal, WallPortal free wallpapers, WallPortal wallpapers,{% endblock %}
