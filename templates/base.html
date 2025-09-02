@@ -51,46 +51,47 @@
 
 <script type="application/ld+json">
 {
-   "@context": "https://schema.org",
-   "@graph": [
-      {
-         "@type": "WebSite",
-         "@id": "{{ request.scheme }}://{{ request.get_host }}/#website",
-         "url": "{{ request.scheme }}://{{ request.get_host }}/",
-         "name": "WallPortal",
-         "publisher": {
-            "@type": "Organization",
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "WebSite",
+            "@id": "{{ request.scheme }}://{{ request.get_host }}/#website",
+            "url": "{{ request.scheme }}://{{ request.get_host }}/",
             "name": "WallPortal",
-            "logo": {
-               "@type": "ImageObject",
-               "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}"
+            "publisher": {
+                "@type": "Organization",
+                "name": "WallPortal",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}"
+                }
             }
-         }
-      },
-      {
-         "@type": "WebPage",
-         "@id": "{{ request.build_absolute_uri }}#webpage",
-         "url": "{{ request.build_absolute_uri }}",
-         "name": "{% block schema_title %}WallPortal - High Quality Wallpapers{% endblock schema_title %}",
-         "isPartOf": { "@id": "{{ request.scheme }}://{{ request.get_host }}/#website" },
-         "primaryImageOfPage": {
-            "@type": "ImageObject",
-            "url": "{% block schema_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}{% endblock schema_image %}"
-         },
-         "breadcrumb": {
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-               {
-                  "@type": "ListItem",
-                  "position": 1,
-                  "name": "Home",
-                  "item": "{{ request.scheme }}://{{ request.get_host }}/"
-               }
-               {% block schema_breadcrumb %}{% endblock schema_breadcrumb %}
-            ]
-         }
-      }
-   ]
+        },
+        {
+            "@type": "WebPage",
+            "@id": "{{ request.build_absolute_uri }}#webpage",
+            "url": "{{ request.build_absolute_uri }}",
+            "name": "{% block schema_title %}WallPortal - High Quality Wallpapers{% endblock schema_title %}",
+            "isPartOf": { "@id": "{{ request.scheme }}://{{ request.get_host }}/#website" },
+            "primaryImageOfPage": {
+                "@type": "ImageObject",
+                "url": "{% block schema_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}{% endblock schema_image %}"
+            },
+            "breadcrumb": {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "{{ request.scheme }}://{{ request.get_host }}/"
+                    }
+                    {% block schema_breadcrumb %}{% endblock schema_breadcrumb %}
+                ]
+            }
+        }
+        {% block schema_graph %}{% endblock schema_graph %}
+    ]
 }
 </script>
 <body class="bg-gray-50 min-h-screen flex flex-col">

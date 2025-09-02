@@ -6,36 +6,25 @@
     {% if not cat and not q %}WallPortal | HD, 4K & 8K Wallpaper Collection{% endif %}
 {% endblock %}
 
-{% block extra_head %}
-   <script type="application/ld+json">
-   {
-      "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      "name": "{% if cat %}{{ cat|title }} Wallpapers{% elif q %}Search: {{ q }} Wallpapers{% else %}WallPortal Wallpapers{% endif %}",
-      "description": "{% if cat %}Download free {{ cat }} wallpapers in HD, 4K and 8K resolutions.{% elif q %}Search results for '{{ q }}' - Find perfect wallpapers in our collection.{% else %}Discover thousands of free high-quality wallpapers in HD, 4K, 8K.{% endif %}",
-      "url": "{{ request.build_absolute_uri }}",
-      "isPartOf": {
-         "@type": "WebSite",
-         "name": "WallPortal Wallpapers",
-         "url": "{{ request.scheme }}://{{ request.get_host }}/"
-      },
-      "mainEntity": [
-         {% for wp in page_obj.object_list %}
+{% block schema_graph %}
+,
+{
+    "@type": "CollectionPage",
+    "name": "{% if cat %}{{ cat|title }} Wallpapers{% elif q %}Search: {{ q }} Wallpapers{% else %}WallPortal Wallpapers{% endif %}",
+    "description": "{% if cat %}Download free {{ cat }} wallpapers in HD, 4K and 8K resolutions.{% elif q %}Search results for '{{ q }}' - Find perfect wallpapers in our collection.{% else %}Discover thousands of free high-quality wallpapers in HD, 4K, 8K.{% endif %}",
+    "url": "{{ request.build_absolute_uri }}",
+    "mainEntity": [
+        {% for wp in page_obj.object_list %}
             {
-               "@type": "ImageObject",
-               "name": "{{ wp.title|escapejs }}",
-               "contentUrl": "{{ request.scheme }}://{{ request.get_host }}{{ wp.view_link }}",
-               "thumbnailUrl": "{{ request.scheme }}://{{ request.get_host }}{{ wp.view_link }}",
-               "description": "{{ wp.resolution_label }} wallpaper with {{ wp.downloads }} downloads",
-               "width": "{{ wp.width }}",
-               "height": "{{ wp.height }}",
-               "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'wallpapers:detail' wp.slug %}"
+                "@type": "ImageObject",
+                "contentUrl": "{{ request.scheme }}://{{ request.get_host }}{{ wp.view_link }}",
+                // ... all your other ImageObject properties ...
+                "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'wallpapers:detail' wp.slug %}"
             }{% if not forloop.last %},{% endif %}
-         {% endfor %}
-      ]
-   }
-   </script>
-{% endblock %}
+        {% endfor %}
+    ]
+}
+{% endblock schema_graph %}
 
 
 {% block meta_description %}{% if cat %}Download free {{ cat }} wallpapers in HD, 4K and 8K resolutions. Curated collection of {{ cat }} backgrounds for desktop and mobile.{% endif %}{% if q %}Search results for "{{ q }}" - Find perfect wallpapers matching your query in our collection.{% endif %}{% if not cat and not q %}WallPortal - Discover and download thousands of free, high-quality wallpapers in HD, QHD, 2K and 4K resolutions. Explore trending backgrounds, updated daily.{% endif %}{% endblock %}

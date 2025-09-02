@@ -1,52 +1,71 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ wp.title }} | Free {{ wp.resolution_label }} Wallpaper Download | WallPortal{% endblock %}
-{% block og_title %}{{ wp.title }} | Free {{ wp.resolution_label }} Wallpaper Download | WallPortal{% endblock %}
+{% block title %}{{ wp.title }} | Free {{ wp.resolution_label }} Wallpaper Download | WallPortal{% endblock title %}
+{% block og_title %}{{ wp.title }} | Free {{ wp.resolution_label }} Wallpaper Download | WallPortal{% endblock og_title %}
 
 {% block canonical_url %}{{ request.build_absolute_uri }}{% endblock canonical_url %}
 
-{% block meta_description %}WallPortal - Download '{{ wp.title }}' - a stunning {{ wp.resolution_label }} wallpaper{% if wp.category %} in the {{ wp.get_category_display }} category{% endif %}. Free high-quality background for desktop and mobile.{% endblock %}
+{% block meta_description %}WallPortal - Download '{{ wp.title }}' - a stunning {{ wp.resolution_label }} wallpaper{% if wp.category %} in the {{ wp.get_category_display }} category{% endif %}. Free high-quality background for desktop and mobile.{% endblock meta_description %}
 
-{% block meta_keywords %}{{ wp.title }}, WallPortal, {{ wp.resolution_label }} wallpaper, free download, {% if wp.category %}{{ wp.get_category_display }}, {% endif %}{{ wp.mime_type|slice:"6:"|upper }}, {% if wp.tags %} {{ wp.tags }} {% endif %} WallPortal, WallPortal free wallpapers, WallPortal wallpapers,{% endblock %}
+{% block meta_keywords %}{{ wp.title }}, WallPortal, {{ wp.resolution_label }} wallpaper, free download, {% if wp.category %}{{ wp.get_category_display }}, {% endif %}{{ wp.mime_type|slice:"6:"|upper }}, {% if wp.tags %} {{ wp.tags }} {% endif %} WallPortal, WallPortal free wallpapers, WallPortal wallpapers,{% endblock meta_keywords %}
 
-{% block og_image %}{{ wp.view_link }}{% endblock %}
+{% block og_image %}{{ wp.view_link }}{% endblock og_image %}
 
 
 {% block extra_head %}
   <meta property="og:image:width" content="{{ wp.width }}">
   <meta property="og:image:height" content="{{ wp.height }}">
   <meta property="og:image:alt" content="{{ wp.title }} wallpaper">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
+{% endblock extra_head %}
+
+{% block schema_graph %}
+, 
+{
+    "@type": "ImageObject",
+    "@id": "{{ request.build_absolute_uri }}#image",
+    "name": "{{ wp.title|escapejs }}",
+    "description": "Download '{{ wp.title }}' - a stunning {{ wp.resolution_label }} wallpaper. Free high-quality background for desktop and mobile.",
+    "contentUrl": "{{ wp.view_link }}",
+    "width": "{{ wp.width }}",
+    "height": "{{ wp.height }}",
+    "encodingFormat": "{{ wp.mime_type }}",
+    "uploadDate": "{{ wp.created_at|date:'Y-m-d' }}",
+    "license": "{{ request.scheme }}://{{ request.get_host }}{% url 'terms_of_service' %}",
+    "publisher": {
+        "@id": "{{ request.scheme }}://{{ request.get_host }}/#website"
+    }
+},
+{
     "@type": "BreadcrumbList",
     "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "{{ request.scheme }}://{{ request.get_host }}/"
-      }
-      {% if cat %}
-      ,{
-        "@type": "ListItem",
-        "position": 2,
-        "name": "{{ cat|title }}",
-        "item": "{{ request.build_absolute_uri }}"
-      }
-      {% elif q %}
-      ,{
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Search: {{ q }}",
-        "item": "{{ request.build_absolute_uri }}"
-      }
-      {% endif %}
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "{{ request.scheme }}://{{ request.get_host }}/"
+        }
+        {% if wp.category %}
+        ,{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "{{ wp.get_category_display }}",
+            "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'wallpapers:home' %}?cat={{ wp.category }}"
+        },{
+            "@type": "ListItem",
+            "position": 3,
+            "name": "{{ wp.title|escapejs }}"
+        }
+        {% else %}
+        ,{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "{{ wp.title|escapejs }}"
+        }
+        {% endif %}
     ]
-  }
-  </script>
-{% endblock %}
+}
+{% endblock schema_graph %}
 
 
 {% block content %}
