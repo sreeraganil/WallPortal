@@ -279,14 +279,6 @@ def sitemap(request):
         "images": []
     })
 
-    # Upload page
-    urls.append({
-        "loc": base_url + reverse("wallpapers:upload"),
-        "priority": "0.7",
-        "changefreq": "monthly",
-        "images": []
-    })
-
     # Wallpaper detail pages
     for wp in Wallpaper.objects.all().iterator():
         image_url = wp.view_link or wp.download_link
