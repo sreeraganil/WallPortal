@@ -136,8 +136,14 @@ def upload(request):
             uploaded = cloudinary.uploader.upload(
                 image_file,
                 folder="wallpapers",
-                resource_type="image"
+                resource_type="image",
+                context={
+                    "site_name": "WallPortal",
+                    "author": "Sreerag A",
+                    "url": f"https://wallportal.onrender.com/wallpapers/{title.replace(' ', '-').lower()}/"
+                }
             )
+
 
             width = uploaded.get("width")
             height = uploaded.get("height")
