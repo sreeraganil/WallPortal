@@ -17,8 +17,12 @@
         {% for wp in page_obj.object_list %}
             {
                 "@type": "ImageObject",
+                "name": "{{ wp.title|escapejs }}",
                 "contentUrl": "{{ request.scheme }}://{{ request.get_host }}{{ wp.view_link }}",
-                // ... all your other ImageObject properties ...
+                "thumbnailUrl": "{{ request.scheme }}://{{ request.get_host }}{{ wp.view_link }}",
+                "description": "{{ wp.resolution_label }} wallpaper with {{ wp.downloads }} downloads",
+                "width": "{{ wp.width }}",
+                "height": "{{ wp.height }}",
                 "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'wallpapers:detail' wp.slug %}"
             }{% if not forloop.last %},{% endif %}
         {% endfor %}
