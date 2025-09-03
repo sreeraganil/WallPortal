@@ -22,48 +22,63 @@
 {% block schema_graph %}
 , 
 {
-    "@type": "ImageObject",
-    "@id": "{{ request.build_absolute_uri }}#image",
-    "name": "{{ wp.title|escapejs }}",
-    "description": "Download '{{ wp.title }}' - a stunning {{ wp.resolution_label }} wallpaper. Free high-quality background for desktop and mobile.",
-    "contentUrl": "{{ wp.view_link }}",
-    "width": "{{ wp.width }}",
-    "height": "{{ wp.height }}",
-    "encodingFormat": "{{ wp.mime_type }}",
-    "uploadDate": "{{ wp.created_at|date:'Y-m-d' }}",
-    "license": "{{ request.scheme }}://{{ request.get_host }}{% url 'terms_of_service' %}",
-    "publisher": {
-        "@id": "{{ request.scheme }}://{{ request.get_host }}/#website"
+  "@type": "ImageObject",
+  "@id": "{{ request.build_absolute_uri }}#image",
+  "name": "{{ wp.title|escapejs }}",
+  "description": "Download '{{ wp.title }}' - a stunning {{ wp.resolution_label }} wallpaper. Free high-quality background for desktop and mobile.",
+  "contentUrl": "{{ wp.view_link }}",
+  "width": "{{ wp.width }}",
+  "height": "{{ wp.height }}",
+  "encodingFormat": "{{ wp.mime_type }}",
+  "uploadDate": "{{ wp.created_at|date:'Y-m-d' }}",
+  "license": "{{ request.scheme }}://{{ request.get_host }}{% url 'terms_of_service' %}",
+  "publisher": {
+    "@id": "{{ request.scheme }}://{{ request.get_host }}/#website"
+  },
+  {% if related %}
+  "hasPart": [
+    {% for item in related %}
+    {
+      "@type": "ImageObject",
+      "name": "{{ item.title|escapejs }}",
+      "contentUrl": "{{ item.view_link }}",
+      "width": "{{ item.width }}",
+      "height": "{{ item.height }}",
+      "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'wallpapers:detail' item.slug %}"
     }
+    {% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ]
+  {% endif %}
 },
 {
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-        {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "{{ request.scheme }}://{{ request.get_host }}/"
-        }
-        {% if wp.category %}
-        ,{
-            "@type": "ListItem",
-            "position": 2,
-            "name": "{{ wp.get_category_display }}",
-            "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'wallpapers:home' %}?cat={{ wp.category }}"
-        },{
-            "@type": "ListItem",
-            "position": 3,
-            "name": "{{ wp.title|escapejs }}"
-        }
-        {% else %}
-        ,{
-            "@type": "ListItem",
-            "position": 2,
-            "name": "{{ wp.title|escapejs }}"
-        }
-        {% endif %}
-    ]
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "{{ request.scheme }}://{{ request.get_host }}/"
+    }
+    {% if wp.category %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ wp.get_category_display }}",
+      "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'wallpapers:home' %}?cat={{ wp.category }}"
+    },{
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ wp.title|escapejs }}"
+    }
+    {% else %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ wp.title|escapejs }}"
+    }
+    {% endif %}
+  ]
 }
 {% endblock schema_graph %}
 
