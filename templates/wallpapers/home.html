@@ -6,6 +6,27 @@
     {% if not cat and not q %}WallPortal | HD, 4K & 8K Wallpaper Collection{% endif %}
 {% endblock %}
 
+
+{% block schema_breadcrumb %}
+    {% if cat %}
+    ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "{{ cat|title }} Wallpapers",
+        "item": "{{ request.build_absolute_uri }}"
+    }
+    {% endif %}
+    {% if q %}
+    ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Search: {{ q }}",
+        "item": "{{ request.build_absolute_uri }}"
+    }
+    {% endif %}
+{% endblock schema_breadcrumb %}
+
+
 {% block schema_graph %}
 ,
 {
