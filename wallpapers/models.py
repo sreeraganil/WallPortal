@@ -108,7 +108,7 @@ class Wallpaper(models.Model):
         auto_now=True,
         help_text="Date and time when last updated"
     )
-    
+    views = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ["-created_at"]
@@ -163,6 +163,11 @@ class Wallpaper(models.Model):
     def increment_downloads(self):
         """Increment download counter"""
         self.downloads += 1
+        self.save()
+
+    def increment_views(self):
+        """Increment download counter"""
+        self.views += 1
         self.save()
 
     @property

@@ -210,6 +210,7 @@ def upload(request):
 
 def detail(request, slug):
     wp = get_object_or_404(Wallpaper, slug=slug)
+    wp.increment_views()
     
     related = Wallpaper.objects.filter(
         category=wp.category
