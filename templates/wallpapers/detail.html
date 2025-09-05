@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ wp.title|truncatechars:45 }} | Free {{ wp.resolution_label }} Wallpaper Download | WallPortal{% endblock title %}
+{% block title %}{{ wp.title|truncatechars:40 }} | Free {{ wp.resolution_label }} Wallpaper Download | WallPortal{% endblock title %}
 {% block og_title %}{{ wp.title }} | Free {{ wp.resolution_label }} Wallpaper Download | WallPortal{% endblock og_title %}
 
 {% block canonical_url %}{{ request.build_absolute_uri }}{% endblock canonical_url %}
