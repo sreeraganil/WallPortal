@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from wallpapers import views
@@ -12,3 +13,7 @@ urlpatterns = [
     path('contact/', views.contact_view, name='contact'),
     path("robots.txt", robots_txt),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [path("_debug_/", include(debug_toolbar.urls))]
