@@ -35,6 +35,13 @@
   "publisher": {
     "@id": "{{ request.scheme }}://{{ request.get_host }}/#website"
   },
+  "acquireLicensePage": "{{ request.scheme }}://{{ request.get_host }}{% url 'terms_of_service' %}",
+  "creator": {
+      "@type": "Person",
+      "name": "{{ wp.uploader.username|default:'WallPortal' }}"
+  },
+  "copyrightNotice": "© {% now "Y" %} WallPortal",
+  "creditText": "Wallpaper from WallPortal",
   {% if related %}
   "hasPart": [
     {% for item in related %}
@@ -44,7 +51,14 @@
       "contentUrl": "{{ item.view_link }}",
       "width": "{{ item.width }}",
       "height": "{{ item.height }}",
-      "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'wallpapers:detail' item.slug %}"
+      "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'wallpapers:detail' item.slug %}",
+      "acquireLicensePage": "{{ request.scheme }}://{{ request.get_host }}{% url 'terms_of_service' %}",
+      "creator": {
+          "@type": "Person",
+          "name": "{{ wp.uploader.username|default:'WallPortal' }}"
+      },
+      "copyrightNotice": "© {% now "Y" %} WallPortal",
+      "creditText": "Wallpaper from WallPortal"
     }
     {% if not forloop.last %},{% endif %}
     {% endfor %}

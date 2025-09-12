@@ -44,7 +44,14 @@
                 "description": "{{ wp.resolution_label }} wallpaper with {{ wp.downloads }} downloads",
                 "width": "{{ wp.width }}",
                 "height": "{{ wp.height }}",
-                "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'wallpapers:detail' wp.slug %}"
+                "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'wallpapers:detail' wp.slug %}",
+                "acquireLicensePage": "{{ request.scheme }}://{{ request.get_host }}{% url 'terms_of_service' %}",
+                "creator": {
+                    "@type": "Person",
+                    "name": "{{ wp.uploader.username|default:'WallPortal' }}"
+                },
+                "copyrightNotice": "© {% now "Y" %} WallPortal",
+                "creditText": "Wallpaper from WallPortal"
             }{% if not forloop.last %},{% endif %}
         {% endfor %}
     ]
