@@ -377,6 +377,44 @@
     {% endif %}
   </article>
 </div>
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-gray-50 dark:bg-gray-900 rounded-xl shadow mb-3 border border-gray-200 dark:border-gray-700">
+    <h2 class="text-lg font-bold mb-4 text-gray-900 dark:text-white">About "{{ wp.title }}"</h2>
+    <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+      This wallpaper titled <strong>{{ wp.title }}</strong> is available in high-definition resolutions including 
+      <span class="font-semibold">{{ wp.resolution_label }}</span> ({{ wp.width }}×{{ wp.height }} px). 
+      Perfect for use as a desktop, tablet, or smartphone background, it combines aesthetic appeal with 
+      excellent clarity.
+    </p>
+    <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+      Whether you're a fan of <em>{{ wp.get_category_display|default:"minimalist designs" }}</em> or just looking 
+      for a fresh wallpaper to refresh your workspace, this download is free and optimized for fast loading.
+    </p>
+    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+      Share this wallpaper with friends or bookmark this page to come back later — our library is updated weekly 
+      with fresh content in categories like Nature, Gaming, Abstract, Minimalism, and more.
+    </p>
+  </section>
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white dark:bg-gray-800 rounded-xl shadow  border border-gray-100 dark:border-gray-700">
+    <h2 class="text-lg font-bold mb-4 text-gray-900 dark:text-white">Frequently Asked Questions</h2>
+    <div class="space-y-4 text-gray-700 dark:text-gray-300">
+      <div>
+        <h3 class="font-semibold">Can I use these wallpapers for commercial projects?</h3>
+        <p>WallPortal wallpapers are free for personal use. For commercial use, check the license information for each image.</p>
+      </div>
+      <div>
+        <h3 class="font-semibold">Do you add new wallpapers regularly?</h3>
+        <p>Yes! We update our library every week with fresh wallpapers in all categories.</p>
+      </div>
+      <div>
+        <h3 class="font-semibold">Are these wallpapers optimized for mobile?</h3>
+        <p>Absolutely. Each wallpaper is available in multiple resolutions including portrait and landscape formats for phones, tablets, and desktops.</p>
+      </div>
+      <div>
+        <h3 class="font-semibold">Do I need to create an account to download?</h3>
+        <p>No sign-up required — you can download wallpapers instantly for free.</p>
+      </div>
+    </div>
+  </section>
 {% endblock %}
 
 {% block extra_js %}

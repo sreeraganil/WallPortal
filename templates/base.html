@@ -141,16 +141,39 @@
    {% block content %}{% endblock %}
 </main>
 
-<footer class="bg-white dark:bg-gray-900 border-t py-6">
-   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
-      <div class="flex justify-center space-x-6 mb-4">
-         <a href="{% url 'about' %}" class="hover:text-blue-600">About</a>
-         <a href="{% url 'privacy_policy' %}" class="hover:text-blue-600">Privacy Policy</a>
-         <a href="{% url 'terms_of_service' %}" class="hover:text-blue-600">Terms of Service</a>
-         <a href="{% url 'contact'   %}" class="hover:text-blue-600">Contact</a>
-      </div>
-      &copy; {% now "Y" %} WallPortal. All rights reserved.     
-   </div>
+<footer class="bg-white dark:bg-gray-900 border-t py-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <!-- Links Row -->
+    <div class="flex flex-wrap justify-center space-x-6 mb-6 text-gray-500 text-sm">
+      <a href="{% url 'about' %}" class="hover:text-blue-600">About</a>
+      <a href="{% url 'privacy_policy' %}" class="hover:text-blue-600">Privacy Policy</a>
+      <a href="{% url 'terms_of_service' %}" class="hover:text-blue-600">Terms of Service</a>
+      <a href="{% url 'contact' %}" class="hover:text-blue-600">Contact</a>
+    </div>
+
+    <!-- About Section -->
+    <div class="max-w-3xl mx-auto text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-6">
+      <p class="mb-3">
+        <strong>WallPortal</strong> is your go-to destination for free, high-quality wallpapers. 
+        We curate images across categories like <em>Nature</em>, <em>Minimalist</em>, <em>Gaming</em>, <em>Abstract</em>, and more, 
+        ensuring they are suitable for desktop, tablet, and mobile devices.
+      </p>
+      <p class="mb-3">
+        Whether you want a calming background for productivity or a vibrant design to refresh your screen, 
+        our growing library has something for everyone. New wallpapers are added weekly to keep your setup fresh.
+      </p>
+      <p>
+        Join our community and share your favorite wallpapers, stay updated with the latest trends, and 
+        enjoy an ad-light, smooth browsing experience.
+      </p>
+    </div>
+
+    <!-- Copyright -->
+    <div class="text-gray-500 text-xs">
+      &copy; {% now "Y" %} WallPortal. All rights reserved.
+    </div>
+  </div>
 </footer>
+
 </body>
 </html>
